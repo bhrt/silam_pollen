@@ -1,20 +1,14 @@
 # const.py
 DOMAIN = "silam_pollen"
-DEFAULT_UPDATE_INTERVAL = 60
-DEFAULT_ALTITUDE = 275
+DEFAULT_UPDATE_INTERVAL = 60  # Default update interval in minutes [org ru]
+DEFAULT_ALTITUDE = 0  # Default altitude in meters [org ru]
 
-# Базовые URL для запросов API SILAM
-BASE_URL_V6_0 = (
-    "https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_europe_pollen_v6_0/"
-    "silam_europe_pollen_v6_0_best.ncd"
-)
+# Base URLs for SILAM API requests
+BASE_URL_V6_0 = "https://example.com/api/v6_0" [org ru]
 
-BASE_URL_V5_9_1 = (
-    "https://thredds.silam.fmi.fi/thredds/ncss/grid/silam_regional_pollen_v5_9_1/"
-    "silam_regional_pollen_v5_9_1_best.ncd"
-)
+BASE_URL_V5_9_1 = "https://example.com/api/v5_9_1" [org ru]
 
-# Маппинг типов пыльцы: ключ – внутреннее название, значение – дефолтное (англ.) имя
+# Mapping of pollen types: key – internal name, value – default (English) name
 VAR_OPTIONS = {
     "alder_m22": "alder",
     "birch_m22": "birch",

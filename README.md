@@ -6,156 +6,155 @@
 
 # SILAM Pollen Allergy Sensor for Home Assistant
 
-Интеграция для Home Assistant, использующая набор данных `"Лучший временной ряд, полученный из последнего доступного прогона."` с сервера SILAM Thredds server для создания службы с сенсорами уровня пыльцы для конкретного местоположения. Расчет прогноза производится Finnish Meteorological Institute с учетом данных аэробиологических, фенологических и метеорологических наблюдений.
+Integration for Home Assistant using the dataset "Best time series obtained from the latest available run." from the SILAM Thredds server to create a service with pollen level sensors for a specific location. The forecast calculation is performed by the Finnish Meteorological Institute, taking into account aerobiological, phenological, and meteorological observation data.
 
-Источник данных: [https://silam.fmi.fi/pollen.html](https://silam.fmi.fi/pollen.html)
+Data source: [https://silam.fmi.fi/pollen.html](https://silam.fmi.fi/pollen.html)
 
 > [!CAUTION]  
-> Предоставленные данные являются непроверенными модельными прогнозами, созданными только для научного использования.
-> Ни качество, ни полнота представленной информации не гарантируются, и производители данных не несут никакой ответственности за её правильность и своевременность.
+> The provided data are unverified model forecasts created for scientific use only.  
+> Neither the quality nor the completeness of the information provided is guaranteed, and the data producers bear no responsibility for its accuracy and timeliness.
 
 > [!IMPORTANT]  
-> Эта интеграция создана с использованием редакции ChatGPT для совместного написания кода, исправления ошибок и редактуры.
-> Если вы придерживаетесь иной этической точки зрения, приношу извинения. Однако, я считаю, что данное применение является морально приемлемым, поскольку интеграция является некоммерческой, бесплатной и свободной, а её цель — способствовать открытости и взаимодействию.
-## 🆕 Что нового в v0.2.1
+> This integration was created using ChatGPT for collaborative coding, bug fixing, and editing.  
+> If you adhere to a different ethical viewpoint, I apologize. However, I believe that this application is morally acceptable as the integration is non-commercial, free, and open, and its purpose is to promote openness and interaction.
+## 🆕 What's new in v0.2.1
 
-**🌸 Прогноз пыльцы (BETA)**   
- - В почасовой и дважды в день прогнозы пыльцы добавлены значения для выбранных аллергенов.  
- - Для каждого сенсора пыльцы теперь добавлен атрибут с прогнозом на следующий день, который отображает дневной прогноз на следующий день, так же как для индекса пыльцы.
+**🌸 Pollen Forecast (BETA)**   
+ - Hourly and twice-daily pollen forecasts have added values for selected allergens.  
+ - For each pollen sensor, an attribute with the forecast for the next day has been added, which displays the daily forecast for the next day, just like for the pollen index.
 
-[![Подробнее в релизе v0.2.1](https://img.shields.io/badge/Подробнее--в--релизе-v0.2.1-blue?style=for-the-badge)](https://github.com/danishru/silam_pollen/releases/tag/v0.2.1)
+[![More details in release v0.2.1](https://img.shields.io/badge/More--in--release-v0.2.1-blue?style=for-the-badge)](https://github.com/danishru/silam_pollen/releases/tag/v0.2.1)
 
-## 🆕 Что нового в v0.2.0
+## 🆕 What's new in v0.2.0
 
-- **🌍 Поддержка двух версий SILAM**  
-  Возможность выбрать между `SILAM Europe (v6.0)` и `SILAM Regional (v5.9.1)` — с автоматическим тестом доступности.  
-  `SILAM Regional (v5.9.1)` обеспечивает более **детальные и точные прогнозы** для северной и северо-западной Европы.
+- **🌍 Support for two versions of SILAM**  
+  Ability to choose between `SILAM Europe (v6.0)` and `SILAM Regional (v5.9.1)` — with automatic availability testing.  
+  `SILAM Regional (v5.9.1)` provides more **detailed and accurate forecasts** for Northern and Northwestern Europe.
 
-- **🌸 Прогноз пыльцы (BETA)**  
-  Новый погодный сенсор с почасовым и двухразовым прогнозом пыльцы через `weather.get_forecasts`.
+- **🌸 Pollen Forecast (BETA)**  
+  New weather sensor with hourly and twice-daily pollen forecast via `weather.get_forecasts`.
 
-- **📊 Единый обработчик данных + служба обновления**  
-  Все данные кэшируются через `data_processing.py`.  
-  Добавлена служба `SILAM Pollen monitor: Ручное обновление` — можно вызывать вручную или в автоматизациях.
+- **📊 Unified Data Handler + Update Service**  
+  All data is cached via `data_processing.py`.  
+  Added service `SILAM Pollen monitor: Manual update` — can be called manually or in automations.
 
-- **🎨 Иконки для интеграции и сенсор**  
-  Индикаторы стали нагляднее: каждый аллерген теперь со своей иконкой.
+- **🎨 Icons for integration and sensor**  
+  Indicators have become clearer: each allergen now has its own icon.
 
-- **🌐 Локализация (на 8 языках)**  
-  Интерфейс переведён на: русский, английский, финский, итальянский, шведский, норвежский, датский и немецкий.
+- **🌐 Localization (in 9 languages)**  
+  The interface has been translated into: Danish, English, Finnish, German, Italian, Norwegian, Polish, Russian, Swedish.
 
-[![Подробнее в релизе v0.2.0](https://img.shields.io/badge/Подробнее--в--релизе-v0.2.0-blue?style=for-the-badge)](https://github.com/danishru/silam_pollen/releases/tag/v0.2.0)
+[![More details in release v0.2.0](https://img.shields.io/badge/More--in--release-v0.2.0-blue?style=for-the-badge)](https://github.com/danishru/silam_pollen/releases/tag/v0.2.0)
 
-## Описание
+## Description
 
-Интеграция **SILAM Pollen** предоставляет службу, состоящую из сенсоров, которая динамически формирует URL для запроса данных о пыльце. Данные запрашиваются с сервера SILAM с помощью HTTP-запроса, затем парсятся и обновляются в Home Assistant. Можно создавать несколько служб для разных местоположений, а также предоставляется возможность выбора необходимых типов пыльцы.
+The **SILAM Pollen** integration provides a service consisting of sensors that dynamically form a URL to request pollen data. Data is requested from the SILAM server via HTTP request, then parsed and updated in Home Assistant. Multiple services can be created for different locations, and there is also the option to select the required types of pollen.
 
 > [!NOTE]
-> Обратите внимание: охват территории ограничен и зависит от выбранного набора данных.  
-> 🟩 **Зелёный** — зона покрытия **SILAM Regional (v5.9.1)** (более детальная).  
-> 🟨 **Жёлтый** — зона покрытия **SILAM Europe (v6.0)** (более общая).  
+> Please note: the coverage area is limited and depends on the selected dataset.  
+> 🟩 **Green** — coverage area of **SILAM Regional (v5.9.1)** (more detailed).  
+> 🟨 **Yellow** — coverage area of **SILAM Europe (v6.0)** (more general).  
 >  
-> Для оценки покрытия и выбора подходящего региона используйте интерактивную карту ниже.
+> To assess coverage and choose the appropriate region, use the interactive map below.
 
-[![Интерактивная карта покрытия с данными по уровню пыльцы](https://danishru.github.io/silam_pollen/pollen_area.webp)](https://danishru.github.io/silam_pollen/)
+[![Interactive coverage map with pollen level data](https://danishru.github.io/silam_pollen/pollen_area.webp)](https://danishru.github.io/silam_pollen/)
 
-## Установка
+## Installation
 
-### Ручная установка
+### Manual Installation
 
-1. Скопируйте папку `silam_pollen` в каталог `custom_components` вашей конфигурации Home Assistant.
-2. Перезапустите Home Assistant.
-3. Добавьте интеграцию через веб-интерфейс:
-   - Перейдите в **Настройки → Интеграции**.
-   - Нажмите **Добавить интеграцию** и выберите **SILAM Pollen**.
-   - Заполните необходимые поля (например, имя, координаты, высоту, выбор типа пыльцы, интервал опроса).
+1. Copy the `silam_pollen` folder to the `custom_components` directory of your Home Assistant configuration.
+2. Restart Home Assistant.
+3. Add the integration via the web interface:
+   - Go to **Settings → Integrations**.
+   - Click **Add Integration** and select **SILAM Pollen**.
+   - Fill in the required fields (e.g., name, coordinates, altitude, pollen type selection, polling interval).
 
-### Установка через HACS
+### Installation via HACS
 
-**Убедитесь, что HACS установлен:**  
-Если HACS ещё не установлен, следуйте [официальной инструкции по установке HACS](https://hacs.xyz/docs/use/).
+**Make sure HACS is installed:**  
+If HACS is not yet installed, follow the [official HACS installation instructions](https://hacs.xyz/docs/use/).
 
-#### Установка одним кликом
+#### One-click Installation
 
-Для установки интеграции **SILAM Pollen** перейдите по ссылке ниже:  
+To install the **SILAM Pollen** integration, click the link below:  
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=danishru&repository=silam_pollen&category=integration)
 
-#### Обычная установка через HACS
+#### Regular Installation via HACS
 
-1. **Откройте Home Assistant и перейдите в HACS:**  
-   На боковой панели найдите и нажмите на значок HACS.
-2. **Добавление пользовательского репозитория:**  
-   - В HACS перейдите на вкладку **Интеграции**.
-   - Нажмите кнопку **Добавить пользовательский репозиторий** (Custom Repositories).
-   - В появившемся окне введите URL репозитория:  
+1. **Open Home Assistant and go to HACS:**  
+   On the sidebar, find and click the HACS icon.
+2. **Adding a Custom Repository:**  
+   - In HACS, go to the **Integrations** tab.
+   - Click the **Add Custom Repository** button.
+   - In the pop-up window, enter the repository URL:  
      `https://github.com/danishru/silam_pollen`  
-   - Выберите тип репозитория **Integration**.
-   - Нажмите **Добавить**.
-3. **Установка интеграции:**  
-   - После добавления репозитория HACS автоматически обнаружит релиз вашей интеграции.
-   - В разделе **Интеграции** появится интеграция с именем **SILAM Pollen**.
-   - Найдите её и нажмите **Установить**.
-   - Дождитесь завершения установки.
+   - Select the repository type **Integration**.
+   - Click **Add**.
+3. **Installing the Integration:**  
+   - After adding the repository, HACS will automatically detect the release of your integration.
+   - In the **Integrations** section, the integration named **SILAM Pollen** will appear.
+   - Find it and click **Install**.
+   - Wait for the installation to complete.
 
-Теперь ваша интеграция установлена и готова к использованию через HACS!
+Now your integration is installed and ready to use via HACS!
 
-## Конфигурация
+## Configuration
 
-Перейдите по ссылке ниже и следуйте инструкциям мастера настройки **SILAM Pollen**:  
+Go to the link below and follow the setup wizard instructions for **SILAM Pollen**:  
 
 [![Open your Home Assistant instance and show an integration.](https://my.home-assistant.io/badges/integration.svg)](https://my.home-assistant.io/redirect/integration/?domain=silam_pollen)
 
-Или откройте **Настройки → Интеграции** в Home Assistant, найдите `SILAM Pollen` и следуйте инструкциям мастера настройки.
+Or open **Settings → Integrations** in Home Assistant, find `SILAM Pollen`, and follow the setup wizard instructions.
 
-Здесь вы сможете задать параметры для корректной работы интеграции:
+Here you can set parameters for the correct operation of the integration:
 
-- **Зона наблюдения** – позволяет выбрать настроенную зону в вашем Home Assistant. По умолчанию выбирается зона `"Home"`.
-- **Тип пыльцы** – выбор наблюдаемой пыльцы. Можно не выбирать ни один тип или выбрать несколько из списка.
-- **Интервал обновления** – интервал загрузки данных с сервера SILAM Thredds server в минутах (по умолчанию 60, минимальное значение — 30 минут).
-- **Прогноз пыльцы (BETA)** – включает дополнительный погодный сенсор с прогнозом уровня пыльцы. Может увеличить время ответа API.
-- **Название зоны** – по умолчанию используется название из выбранной зоны. Это имя используется для формирования названий служб и сенсоров. Параметр можно переопределить.
-- **Высота над уровнем моря** – высота над уровнем моря, используемая для выборки данных об уровне пыльцы из набора данных. Если выбрана зона `"Home"`, данные берутся из общих настроек (`config/general`); в ином случае по умолчанию устанавливается значение 275. Параметр можно переопределить.
-- **Местоположение** – отображает на карте местоположение выбранной зоны. Зону наблюдения можно изменить с помощью карты или вручную задать координаты "Широта" и "Долгота". Указанный радиус отражает примерное пространственное разрешение данных о пыльце (около 10 км).
+- **Observation Zone** – allows you to select a configured zone in your Home Assistant. By default, the zone "Home" is selected.
+- **Pollen Type** – selection of the observed pollen. You can choose none or select several from the list.
+- **Update Interval** – interval for loading data from the SILAM Thredds server in minutes (default 60, minimum value — 30 minutes).
+- **Pollen Forecast (BETA)** – includes an additional weather sensor with pollen level forecast. May increase API response time.
+- **Zone Name** – by default, the name from the selected zone is used. This name is used to form the names of services and sensors. The parameter can be overridden.
+- **Altitude** – altitude above sea level used for retrieving pollen level data from the dataset. If the zone "Home" is selected, data is taken from general settings (`config/general`); otherwise, the default value is set to 275. The parameter can be overridden.
+- **Location** – displays the location of the selected zone on the map. The observation zone can be changed using the map or manually entering the coordinates "Latitude" and "Longitude". The specified radius reflects the approximate spatial resolution of the pollen data (about 10 km).
 
-## Использование
+## Usage
 
-После установки интеграции в Home Assistant создается служба с именем `SILAM Pollen - {Название зоны}`. В описании службы указываются координаты местоположения наблюдения и версия используемого набора данных.
+After installing the integration, a service named `SILAM Pollen - {Zone Name}` is created in Home Assistant. The service description includes the coordinates of the observation location and the version of the dataset used.
 
 ![image](https://github.com/user-attachments/assets/5d060b47-e758-4d4c-9325-0188d991bfee)
 
+Within the service, a **Pollen Index** sensor is created, the state of which displays the localized value corresponding to the numerical index calculated based on hourly averages and threshold values from the reference table by Mikhail Sofiev ([link](https://www.researchgate.net/profile/Mikhail-Sofiev)). 
 
-В рамках службы создается сенсор **Индекс пыльцы**, состояние которого отображает локализованное значение, соответствующее числовому индексу, рассчитанному на основе почасовых средних значений и пороговых значений из справочной таблицы Mikhail Sofiev ([ссылка](https://www.researchgate.net/profile/Mikhail-Sofiev)). 
+Possible index values:
+- 1 – Very low
+- 2 – Low
+- 3 – Moderate
+- 4 – High
+- 5 – Very high
+- If the value does not correspond to any of the specified levels, "Unknown" is displayed.
 
-Возможные значения индекса:
-- 1 – Очень низкий
-- 2 – Низкий
-- 3 – Средний
-- 4 – Высокий
-- 5 – Очень высокий
-- Если значение не соответствует ни одному из указанных уровней, отображается «Неизвестно».
+Additionally, the forecast date and the main allergen significantly affecting the index formation are recorded in the sensor attributes.
 
-Дополнительно в атрибуты сенсора записываются дата прогноза и основной аллерген, оказывающий существенное влияние на формирование индекса.
-
-Если выбран тип пыльцы, то для каждого выбранного типа создается отдельный сенсор, отображающий округленное до целого число, представляющее смоделированное количество пыльцы (единиц на кубический метр). В атрибутах таких сенсоров также указывается ближайшая доступная высота над уровнем моря, которая использовалась для выборки данных.
+If a pollen type is selected, a separate sensor is created for each selected type, displaying a rounded whole number representing the modeled amount of pollen (units per cubic meter). In the attributes of such sensors, the nearest available altitude above sea level used for retrieving data is also indicated.
 
 |  ![image](https://github.com/user-attachments/assets/99a5e8a3-303c-4c7c-b885-a70c5e54269b) | ![image](https://github.com/user-attachments/assets/dbc735f0-10f0-4a88-8fbb-1dbc5d98f5eb)  |
 | ------------- | ------------- |
 
-Если включена опция **Прогноз пыльцы (BETA)**, будет создан дополнительный **погодный сенсор**, который предоставляет:
-- почасовой прогноз на 24 часа (с шагом 3 часа),
-- и прогноз дважды в сутки на 36 часов вперёд.
+If the **Pollen Forecast (BETA)** option is enabled, an additional **weather sensor** will be created, which provides:
+- hourly forecast for 24 hours (with a 3-hour step),
+- and a twice-daily forecast for 36 hours ahead.
 
-Состояние погодного сенсора отображает **индекс пыльцы на первый доступный временной интервал почасового прогноза**.  
+The state of the weather sensor displays the **pollen index for the first available time interval of the hourly forecast**.  
 
 ![image](https://github.com/user-attachments/assets/fe9bc3ce-8d86-444a-b768-243fe3ec66fa)
 
-Эти данные доступны через стандартный сервис `weather.get_forecasts`.
+This data is available through the standard service `weather.get_forecasts`.
 
 ![image](https://github.com/user-attachments/assets/54f85a99-6b78-4035-a206-5f4aa64e562e)
 
 <details>
-<summary>Показать пример ответа "Ежечасный"</summary>
+<summary>Show example response "Hourly"</summary>
 
 ```yaml
 weather.silam_pollen_frantsiia_forecast:
@@ -220,7 +219,7 @@ weather.silam_pollen_frantsiia_forecast:
 </details>
 
 <details>
-<summary>Показать пример ответа "Два раза в день"</summary>
+<summary>Show example response "Twice Daily"</summary>
 
 ```yaml
 weather.silam_pollen_frantsiia_forecast:
@@ -252,72 +251,72 @@ weather.silam_pollen_frantsiia_forecast:
 ```
 </details>
 
-### Как рассчитывается прогноз
+### How the forecast is calculated
 
-Прогноз пыльцы в интеграции **SILAM Pollen** формируется на основе модели SILAM и агрегируется в два типа прогнозов:
+The pollen forecast in the **SILAM Pollen** integration is formed based on the SILAM model and aggregated into two types of forecasts:
 
-#### Почасовой прогноз (24 часа)
-- Строится с шагом в 3 часа.
-- Для каждого 3-часового окна рассчитываются:
-  - Максимальная температура.
-  - Индекс пыльцы — медианное значение, округлённое вверх до ближайшего целого.
-  - Медианное значение для каждого выбранного аллергена.
-- Используется текущая дата + 24 часа вперёд.
+#### Hourly Forecast (24 hours)
+- Built with a 3-hour step.
+- For each 3-hour window, the following are calculated:
+  - Maximum temperature.
+  - Pollen index — median value rounded up to the nearest whole number.
+  - Median value for each selected allergen.
+- Uses the current date + 24 hours ahead.
 
-#### Прогноз дважды в сутки (36 часов)
-- Данные группируются в 3 интервала по 12 часов (утро/ночь).
-- Вычисляется:
-  - Максимальная и минимальная температура.
-  - Индекс пыльцы — медианное значение по интервалу, также округляется вверх.
-  - Медианное значение для каждого выбранного аллергена.
-- Прогнозы фиксируются на 00:00 и 12:00 (локальное время пользователя).
+#### Twice Daily Forecast (36 hours)
+- Data is grouped into 3 intervals of 12 hours (morning/night).
+- Calculated:
+  - Maximum and minimum temperature.
+  - Pollen index — median value over the interval, also rounded up.
+  - Median value for each selected allergen.
+- Forecasts are fixed at 00:00 and 12:00 (local user time).
 
-#### Используемые параметры
-- `POLI` — значение индекса пыльцы.
-- `temp_2m` — температура на высоте 2 метров.
+#### Used Parameters
+- `POLI` — pollen index value.
+- `temp_2m` — temperature at a height of 2 meters.
 
-#### Техника агрегации
-- Данные из SILAM парсятся из XML и объединяются по дате (`date`).
-- Расчёты выполняются с использованием `statistics.median`, `max`, `min`.
-- Все прогнозы кэшируются в `merged_data` и доступны через `weather.get_forecasts`.
+#### Aggregation Technique
+- Data from SILAM is parsed from XML and merged by date (`date`).
+- Calculations are performed using `statistics.median`, `max`, `min`.
+- All forecasts are cached in `merged_data` and available through `weather.get_forecasts`.
  
-## Дополнительные ресурсы
+## Additional Resources
 
-Для более подробного изучения информации о пыльце и зонах её распространения рекомендуем ознакомиться со следующими проектами:
+For more detailed information about pollen and its distribution areas, we recommend checking out the following projects:
 
 - **SILAM Pollen (FMI)**  
   [https://silam.fmi.fi/pollen.html](https://silam.fmi.fi/pollen.html)  
-  Официальный источник пыльцевых прогнозов от Финского метеорологического института. Предоставляет 5-дневные прогнозы распределения пыльцы по Европе и Северной Европе (береза, трава, олива, амброзия) в сотрудничестве с Европейской сетью аллергенов (EAN).
+  Official source of pollen forecasts from the Finnish Meteorological Institute. Provides 5-day forecasts of pollen distribution across Europe and Northern Europe (birch, grass, olive, ragweed) in collaboration with the European Allergens Network (EAN).
 
 - **Pollen Club**  
   [https://pollen.club/](https://pollen.club/)  
-  Совместный проект SILAM и Пыльца Club, предлагающий прогнозы появления пыльцы для европейской части России. На карте отображается почасовой прогноз SILAM и дневной прогноз для Москвы, при этом при совмещении выбирается вариант с более высокими концентрациями.
+  A joint project of SILAM and Pollen Club, offering forecasts of pollen occurrence for the European part of Russia. The map displays the hourly SILAM forecast and daily forecast for Moscow, with the option to choose the one with higher concentrations.
 
 - **Allergotop: Allergofon**  
   [https://allergotop.com/allergofon](https://allergotop.com/allergofon)  
-  Проект, предоставляющий лабораторно-исследовательские данные пыльцевого мониторинга, полученные с помощью пыльцевых ловушек. Эти данные помогают определить порог чувствительности к аллергенам и оптимизировать ежедневную активность аллергиков.
+  A project providing laboratory-research data on pollen monitoring obtained using pollen traps. This data helps determine the sensitivity threshold to allergens and optimize daily activities for allergy sufferers.
 
 - **MyAllergo**  
   [https://myallergo.ru/pylca/](https://myallergo.ru/pylca/)  
-  Проект, публикующий ежедневные данные пыльцевой ловушки в Санкт-Петербурге. Предоставляет информацию о концентрации пыльцы с удобной цветовой индикацией, что особенно полезно для аллергиков.
+  A project publishing daily data from pollen traps in St. Petersburg. Provides information on pollen concentration with convenient color coding, which is especially useful for allergy sufferers.
 
 - **Allergo.Space: Pollen Monitoring**  
   [https://allergo.space/pollen-monitoring/](https://allergo.space/pollen-monitoring/)  
-  Информационный ресурс, публикующий модельные прогнозы пыльцы, собранные из открытых источников (в том числе данных SILAM). Проект ориентирован на улучшение качества жизни аллергиков за счёт точного мониторинга аллергенов.
+  An informational resource publishing model pollen forecasts collected from open sources (including SILAM data). The project aims to improve the quality of life for allergy sufferers through accurate monitoring of allergens.
 
-- **Яндекс.Погода – Аллергии**  
+- **Yandex Weather – Allergies**  
   [https://yandex.ru/pogoda/allergies](https://yandex.ru/pogoda/allergies)  
-  Раздел Яндекс.Погоды, где по уникальной формуле рассчитывается активность пыльцы с учётом периодов цветения, погодных условий и отзывов пользователей для оценки влияния аллергенов на самочувствие.
+  A section of Yandex Weather where the activity of pollen is calculated using a unique formula considering flowering periods, weather conditions, and user feedback to assess the impact of allergens on well-being.
 
-## Лицензия
+## License
 
 [MIT License](LICENSE)
 
-## Поддержка
+## Support
 
-Если возникнут вопросы или проблемы, создайте issue в [репозитории](https://github.com/danishru/silam_pollen/issues).
+If you have any questions or issues, please create an issue in the [repository](https://github.com/danishru/silam_pollen/issues).
 
-<!-- Определения ссылок для бейджей -->
+<!-- Definitions for badge links -->
 [releases-shield]: https://img.shields.io/github/release/danishru/silam_pollen.svg?style=for-the-badge
 [releases]: https://github.com/danishru/silam_pollen/releases
 [commits-shield]: https://img.shields.io/github/commit-activity/m/danishru/silam_pollen.svg?style=for-the-badge
